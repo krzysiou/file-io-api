@@ -4,10 +4,15 @@ import type { NextFunction, Request, Response } from 'express';
 import type { User } from '../types';
 
 const DAY = 24 * 60 * 60 * 1000;
-const EXPIRE_DAYS = 7 * DAY;
-
+const WEEK = 7 * DAY;
 const generateJsonWebToken = (user: User) => {
-  return sign(user, process.env.TOKEN_SECRET as string);
+  const tokenSecret = process.env.TOKEN_SECRET as string;
+
+  return sign(user, tokenSecret);
+};
+
+const getExpireDate = () => {
+  return Date.now() + WEEK;
 };
 
 const verifyJsonWebToken = (
@@ -16,9 +21,12 @@ const verifyJsonWebToken = (
   next: NextFunction
 ) => {
   try {
-    const token = req.headers.authorization?.split(' ')[1] as string;
+    const tokenSecret = process.env.TOKEN_SECRET as string;
 
-    req.body.user = verify(token, process.env.TOKEN_SECRET as string) as User;
+    const token = req.headers.authorization?.split(' ')[1] as string;
+    const user = verify(token, tokenSecret) as User;
+
+    req.body.user = user;
 
     next();
   } catch {
@@ -26,4 +34,4 @@ const verifyJsonWebToken = (
   }
 };
 
-export { generateJsonWebToken, verifyJsonWebToken, EXPIRE_DAYS };
+export { getExpireDate, generateJsonWebToken, verifyJsonWebToken };

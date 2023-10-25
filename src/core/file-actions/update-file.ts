@@ -1,13 +1,13 @@
 import type { Request, Response } from 'express';
 import type { File, User } from '../../types';
 
-import { mockUserDatabase } from '../../utils/mock-user-database';
+import { findUser } from '../../utils/mock-user-database';
 
 const updateFile = async (req: Request, res: Response) => {
   const requestingUser: User = req.body.user;
-  const requestingFile = req.body.file as File;
+  const requestingFile: File = req.body.file;
 
-  const user = mockUserDatabase.find((user) => user.id === requestingUser.id);
+  const user = findUser({ id: requestingUser.id });
 
   if (!user) return res.status(404).send({ message: 'User not found' });
 

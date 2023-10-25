@@ -2,8 +2,9 @@ import { hash } from 'bcrypt';
 import { v4 as uuid } from 'uuid';
 
 import type { Request, Response } from 'express';
+import type { User } from '../../types';
 
-import { EXPIRE_DAYS, generateJsonWebToken } from '../../utils/jwt-actions';
+import { generateJsonWebToken, getExpireDate } from '../../utils/jwt-actions';
 import { findUser, saveUser } from '../../utils/mock-user-database';
 
 const hashPassword = async (password: string): Promise<string> => {
@@ -27,7 +28,7 @@ const userRegister = async (req: Request, res: Response) => {
       .send({ password: { message: 'Password must be provided' } });
   }
 
-  const user = findUser(username);
+  const user = findUser({ username });
 
   if (user) {
     return res
@@ -38,7 +39,7 @@ const userRegister = async (req: Request, res: Response) => {
   const hashedPassword = await hashPassword(password);
   const id = uuid();
 
-  const userData = {
+  const userData: User = {
     id,
     username,
     password: hashedPassword,
@@ -48,7 +49,7 @@ const userRegister = async (req: Request, res: Response) => {
   saveUser(userData);
 
   const accessToken = generateJsonWebToken(userData);
-  const expire = Date.now() + EXPIRE_DAYS;
+  const expire = getExpireDate();
 
   return res.status(200).send({ id, accessToken, expire });
 };

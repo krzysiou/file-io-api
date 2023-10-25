@@ -1,9 +1,9 @@
 import bodyParser from 'body-parser';
 
+import type { Request, Response } from 'express';
 import type { Binding } from './types';
 
 import { verifyJsonWebToken } from './utils/jwt-actions';
-import { checkUsers } from './core/check-users';
 import { userLogin } from './core/auth-actions/user-login';
 import { userRegister } from './core/auth-actions/user-register';
 import { getUserData } from './core/fetch-actions/get-user-data';
@@ -11,6 +11,13 @@ import { getFileData } from './core/fetch-actions/get-file-data';
 import { createFile } from './core/file-actions/create-file';
 import { updateFile } from './core/file-actions/update-file';
 import { deleteFile } from './core/file-actions/delete-file';
+import { mockUserDatabase } from './utils/mock-user-database';
+
+// --- THIS IS TEMPORARY
+const checkUsers = async (req: Request, res: Response) => {
+  return res.status(200).send(mockUserDatabase);
+};
+// ---
 
 const jsonParser = bodyParser.json();
 

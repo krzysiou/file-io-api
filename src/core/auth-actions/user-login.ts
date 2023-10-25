@@ -2,14 +2,14 @@ import { compare } from 'bcrypt';
 
 import type { Request, Response } from 'express';
 
-import { EXPIRE_DAYS, generateJsonWebToken } from '../../utils/jwt-actions';
+import { getExpireDate, generateJsonWebToken } from '../../utils/jwt-actions';
 import { findUser } from '../../utils/mock-user-database';
 
 const validatePassword = async (
-  passedPassword: string,
-  validHashedPassword: string
+  password: string,
+  validPassword: string
 ): Promise<boolean> => {
-  const passwordMatching = await compare(passedPassword, validHashedPassword);
+  const passwordMatching = await compare(password, validPassword);
 
   return passwordMatching;
 };
@@ -29,7 +29,7 @@ const userLogin = async (req: Request, res: Response) => {
       .send({ password: { message: 'Password must be provided' } });
   }
 
-  const user = findUser(username);
+  const user = findUser({ username });
 
   if (!user) {
     return res.status(404).send({ username: { message: 'User not found' } });
@@ -42,7 +42,7 @@ const userLogin = async (req: Request, res: Response) => {
   }
 
   const accessToken = generateJsonWebToken(user);
-  const expire = Date.now() + EXPIRE_DAYS;
+  const expire = getExpireDate();
   const id = user.id;
 
   return res.status(200).send({ id, accessToken, expire });

@@ -2,12 +2,31 @@ import type { User } from '../types';
 
 const mockUserDatabase: User[] = [];
 
-const findUser = (username: string) => {
-  const user = mockUserDatabase.find(
-    (potentialUser) => potentialUser.username === username
-  );
+type FindUserParams = {
+  username?: string;
+  id?: string;
+};
 
-  return user;
+type FindUser = (params: FindUserParams) => User | undefined;
+
+const findUser: FindUser = ({ id, username }) => {
+  if (id) {
+    const user = mockUserDatabase.find(
+      (potentialUser) => potentialUser.id === id
+    );
+
+    return user;
+  }
+
+  if (username) {
+    const user = mockUserDatabase.find(
+      (potentialUser) => potentialUser.username === username
+    );
+
+    return user;
+  }
+
+  return undefined;
 };
 
 const saveUser = (user: User) => {
