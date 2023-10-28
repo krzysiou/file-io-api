@@ -28,6 +28,7 @@ type SpzInfo = {
   level: string;
   term: string;
   year: string;
+  dean: string;
 };
 
 type MainSubject = {
