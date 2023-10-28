@@ -17,7 +17,9 @@ interface Binding {
   middleware?: expressMiddleware | expressMiddleware[];
 }
 
-type FileType = 'spz' | 'status-studenta';
+type FileType = 'spz' | 'wypis';
+
+type Form = SpzForm | WypisForm;
 
 type SpzInfo = {
   name: string;
@@ -43,12 +45,21 @@ type SideSubject = {
   ects: string;
   faculty: string;
 };
-
 interface SpzForm {
   info: SpzInfo;
   mainSubjects: MainSubject[];
   sideSubjects: SideSubject[];
 }
+
+type WypisForm = {
+  name: string;
+  surname: string;
+  albumNumber: string;
+  fieldOfStudy: string;
+  email: string;
+  faculty: string;
+  dean: string;
+};
 
 interface File {
   id: string;
@@ -56,7 +67,7 @@ interface File {
   type: FileType;
   dateOfCreation: number;
   dateOfUpdate: number;
-  form: SpzForm;
+  form: Form;
 }
 
 interface User {
@@ -73,4 +84,8 @@ export type {
   Binding,
   User,
   File,
+  Form,
+  FileType,
+  SpzForm,
+  WypisForm,
 };

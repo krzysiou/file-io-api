@@ -4,41 +4,22 @@ import type { Request, Response } from 'express';
 import type { User, File } from '../../types';
 
 import { findUser } from '../../utils/mock-user-database';
+import { checkValidation } from '../../utils/validation';
 
 const createFile = async (req: Request, res: Response) => {
   const requestingUser: User = req.body.user;
   const requestingFile: File = req.body.file;
 
-  const { title, form } = requestingFile;
-  const { info, mainSubjects } = form;
-  const {
-    name,
-    surname,
-    albumNumber,
-    fieldOfStudy,
-    email,
-    level,
-    term,
-    year,
-    dean,
-  } = info;
+  const { title, type, form } = requestingFile;
 
-  if (
-    !title ||
-    !name ||
-    !surname ||
-    !albumNumber ||
-    !fieldOfStudy ||
-    !email ||
-    !level ||
-    !term ||
-    !year ||
-    !dean ||
-    mainSubjects.length === 0
-  ) {
-    return res
-      .status(400)
-      .send({ message: 'You need to provide all information' });
+  const payload = checkValidation(type, form);
+
+  if (payload) {
+    return res.status(400).send(payload);
+  }
+
+  if (!title) {
+    return res.status(400).send({ message: 'You need to provide file title' });
   }
 
   const id = uuid();
