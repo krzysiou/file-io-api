@@ -1,5 +1,9 @@
 import type { NextFunction, Request, Response } from 'express';
 
+type FileType = 'spz' | 'wypis' | 'przepis';
+
+type Form = SpzForm | WypisForm | PrzepisForm;
+
 type RequestMethod = 'GET' | 'POST';
 
 type expressCallback = (req: Request, res: Response) => void;
@@ -16,10 +20,6 @@ interface Binding {
   callback: expressCallback;
   middleware?: expressMiddleware | expressMiddleware[];
 }
-
-type FileType = 'spz' | 'wypis';
-
-type Form = SpzForm | WypisForm;
 
 type SpzInfo = {
   name: string;
@@ -61,6 +61,26 @@ type WypisForm = {
   dean: string;
 };
 
+type Subject = {
+  name: string;
+  type: string;
+  grade: number;
+  dateOfCompletion: string;
+};
+
+type PrzepisForm = {
+  name: string;
+  surname: string;
+  albumNumber: string;
+  fieldOfStudy: string;
+  email: string;
+  dean: string;
+  level: string;
+  year: string;
+  termType: string;
+  subjects: Subject[];
+};
+
 interface File {
   id: string;
   title: string;
@@ -88,4 +108,5 @@ export type {
   FileType,
   SpzForm,
   WypisForm,
+  PrzepisForm,
 };
