@@ -11,8 +11,17 @@ const createFile = async (req: Request, res: Response) => {
 
   const { title, form } = requestingFile;
   const { info, mainSubjects } = form;
-  const { name, surname, albumNumber, fieldOfStudy, email, level, term, year } =
-    info;
+  const {
+    name,
+    surname,
+    albumNumber,
+    fieldOfStudy,
+    email,
+    level,
+    term,
+    year,
+    dean,
+  } = info;
 
   if (
     !title ||
@@ -24,6 +33,7 @@ const createFile = async (req: Request, res: Response) => {
     !level ||
     !term ||
     !year ||
+    !dean ||
     mainSubjects.length === 0
   ) {
     return res
