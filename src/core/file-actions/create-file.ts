@@ -29,10 +29,10 @@ const createFile = async (req: Request, res: Response) => {
     return res.status(404).send({ message: 'You do not have an account' });
   }
 
-  user.files.push({
-    ...requestingFile,
-    id,
-  });
+  // user.files.push({
+  //   ...requestingFile,
+  //   id,
+  // });
 
   return res.status(200).send();
 };

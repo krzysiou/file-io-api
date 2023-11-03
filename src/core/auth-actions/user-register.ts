@@ -5,7 +5,8 @@ import type { Request, Response } from 'express';
 import type { User } from '../../types';
 
 import { generateJsonWebToken, getExpireDate } from '../../utils/jwt-actions';
-import { findUser, saveUser } from '../../utils/mock-user-database';
+import { findUser } from '../../database/utils/find-user';
+import { saveUser } from '../../database/utils/save-user';
 
 const hashPassword = async (password: string): Promise<string> => {
   const hashedPassword = await hash(password, 10);
@@ -28,7 +29,7 @@ const userRegister = async (req: Request, res: Response) => {
       .send({ password: { message: 'Password must be provided' } });
   }
 
-  const user = findUser({ username });
+  const user = await findUser({ username });
 
   if (user) {
     return res
@@ -43,10 +44,9 @@ const userRegister = async (req: Request, res: Response) => {
     id,
     username,
     password: hashedPassword,
-    files: [],
   };
 
-  saveUser(userData);
+  await saveUser(userData);
 
   const accessToken = generateJsonWebToken(userData);
   const expire = getExpireDate();

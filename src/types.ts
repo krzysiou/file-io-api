@@ -94,7 +94,8 @@ interface User {
   id: string;
   username: string;
   password: string;
-  files: File[];
+  // remove question mark after db ready
+  files?: File[];
 }
 
 export type {

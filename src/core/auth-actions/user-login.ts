@@ -3,7 +3,7 @@ import { compare } from 'bcrypt';
 import type { Request, Response } from 'express';
 
 import { getExpireDate, generateJsonWebToken } from '../../utils/jwt-actions';
-import { findUser } from '../../utils/mock-user-database';
+import { findUser } from '../../database/utils/find-user';
 
 const validatePassword = async (
   password: string,
@@ -29,7 +29,7 @@ const userLogin = async (req: Request, res: Response) => {
       .send({ password: { message: 'Password must be provided' } });
   }
 
-  const user = findUser({ username });
+  const user = await findUser({ username });
 
   if (!user) {
     return res.status(404).send({ username: { message: 'User not found' } });

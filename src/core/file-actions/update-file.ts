@@ -23,11 +23,11 @@ const updateFile = async (req: Request, res: Response) => {
   const user = findUser({ id: requestingUser.id });
   if (!user) return res.status(404).send({ message: 'User not found' });
 
-  const foundFile = user.files.find((file) => file.id === requestingFile.id);
-  if (!foundFile) return res.status(404).send({ message: 'File not found' });
+  // const foundFile = user.files!.find((file) => file.id === requestingFile.id);
+  // if (!foundFile) return res.status(404).send({ message: 'File not found' });
 
-  const indexOfFile = user.files.indexOf(foundFile);
-  user.files[indexOfFile] = requestingFile;
+  // const indexOfFile = user.files!.indexOf(foundFile);
+  // user.files![indexOfFile] = requestingFile;
 
   return res.status(200).send();
 };
