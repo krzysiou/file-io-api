@@ -1,20 +1,42 @@
 import type { Request, Response } from 'express';
 import type { User } from '../../types';
 
-import { findUser } from '../../utils/mock-user-database';
+import { getFiles } from '../../database/user/get-files';
+import { deleteWypisFile } from '../../database/files/delete/delete-wypis-file';
+import { deleteSpzFile } from '../../database/files/delete/delete-spz-file';
+import { deletePrzepisFile } from '../../database/files/delete/delete-przepis-file';
 
 const deleteFile = async (req: Request, res: Response) => {
   const requestingUser: User = req.body.user;
   const fileId: string = req.body.id;
 
-  const user = findUser({ id: requestingUser.id });
-  if (!user) return res.status(404).send({ message: 'User not found' });
+  const files = await getFiles(requestingUser.id);
+  if (!files) {
+    return res.status(404).send('Could not find files for user');
+  }
 
-  // const file = user.files!.find((file) => file.id === fileId);
-  // if (!file) return res.status(404).send({ message: 'File not found' });
+  const file = files.find((file) => file.id === fileId);
+  if (!file) {
+    return res.status(404).send({ message: 'File not found' });
+  }
 
-  // const indexOfFile = user.files!.indexOf(file);
-  // user.files!.splice(indexOfFile, 1);
+  switch (file.type) {
+    case 'spz': {
+      deleteSpzFile(fileId);
+      break;
+    }
+    case 'wypis': {
+      deleteWypisFile(fileId);
+      break;
+    }
+    case 'przepis': {
+      deletePrzepisFile(fileId);
+      break;
+    }
+    default: {
+      return;
+    }
+  }
 
   return res.status(200).send();
 };

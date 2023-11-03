@@ -3,8 +3,10 @@ import { v4 as uuid } from 'uuid';
 import type { Request, Response } from 'express';
 import type { User, File } from '../../types';
 
-import { findUser } from '../../utils/mock-user-database';
 import { checkValidation } from '../../utils/validation';
+import { createWypisFile } from '../../database/files/create/create-wypis-file';
+import { createPrzepisFile } from '../../database/files/create/create-przepis-file';
+import { createSpzFile } from '../../database/files/create/create-spz-file';
 
 const createFile = async (req: Request, res: Response) => {
   const requestingUser: User = req.body.user;
@@ -13,7 +15,6 @@ const createFile = async (req: Request, res: Response) => {
   const { title, type, form } = requestingFile;
 
   const payload = checkValidation(type, form);
-
   if (payload) {
     return res.status(400).send(payload);
   }
@@ -23,16 +24,29 @@ const createFile = async (req: Request, res: Response) => {
   }
 
   const id = uuid();
-  const user = findUser({ id: requestingUser.id });
 
-  if (!user) {
-    return res.status(404).send({ message: 'You do not have an account' });
+  const file = {
+    ...requestingFile,
+    id,
+  };
+
+  switch (file.type) {
+    case 'spz': {
+      createSpzFile(requestingUser.id, file);
+      break;
+    }
+    case 'wypis': {
+      createWypisFile(requestingUser.id, file);
+      break;
+    }
+    case 'przepis': {
+      createPrzepisFile(requestingUser.id, file);
+      break;
+    }
+    default: {
+      return;
+    }
   }
-
-  // user.files.push({
-  //   ...requestingFile,
-  //   id,
-  // });
 
   return res.status(200).send();
 };

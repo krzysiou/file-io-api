@@ -5,8 +5,8 @@ import type { Request, Response } from 'express';
 import type { User } from '../../types';
 
 import { generateJsonWebToken, getExpireDate } from '../../utils/jwt-actions';
-import { findUser } from '../../database/utils/find-user';
-import { saveUser } from '../../database/utils/save-user';
+import { findUser } from '../../database/user/find-user';
+import { saveUser } from '../../database/user/save-user';
 
 const hashPassword = async (password: string): Promise<string> => {
   const hashedPassword = await hash(password, 10);

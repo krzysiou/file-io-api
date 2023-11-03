@@ -3,7 +3,7 @@ import { compare } from 'bcrypt';
 import type { Request, Response } from 'express';
 
 import { getExpireDate, generateJsonWebToken } from '../../utils/jwt-actions';
-import { findUser } from '../../database/utils/find-user';
+import { findUser } from '../../database/user/find-user';
 
 const validatePassword = async (
   password: string,
