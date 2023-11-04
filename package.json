@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon ./src/index.ts",
+    "dev": "nodemon ./api/index.ts",
     "build": "npx tsc",
-    "start": "nodemon ./build/index.js",
+    "start": "nodemon ./build/api/index.js",
     "clean": "rm -rf build",
     "lint": "eslint . --ext .ts,.tsx",
     "lint:fix": "npm run lint -- --fix"
