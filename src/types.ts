@@ -110,4 +110,5 @@ export type {
   SpzForm,
   WypisForm,
   PrzepisForm,
+  Subject,
 };

@@ -5,7 +5,7 @@ CREATE TABLE users (
 );
 
 CREATE TABLE files (
-    id               VARCHAR(255) NOT NULL PRIMARY KEY,
+    file_id               VARCHAR(255) NOT NULL PRIMARY KEY,
     title            VARCHAR(255) NOT NULL,
     type             VARCHAR(255) NOT NULL,
     date_of_creation NUMERIC NOT NULL,
@@ -15,6 +15,7 @@ CREATE TABLE files (
 );
 
 CREATE TABLE wypis_forms (
+    form_id              VARCHAR(255) NOT NULL PRIMARY KEY,
     name            VARCHAR(255) NOT NULL,
     surname         VARCHAR(255) NOT NULL,
     album_number    VARCHAR(255) NOT NULL,
@@ -23,5 +24,30 @@ CREATE TABLE wypis_forms (
     faculty         VARCHAR(255) NOT NULL,
     dean            VARCHAR(255) NOT NULL,
     file_id         VARCHAR(255) NOT NULL,
-    CONSTRAINT fk_file_wypis FOREIGN KEY (file_id) REFERENCES files(id)
+    CONSTRAINT fk_file_wypis FOREIGN KEY (file_id) REFERENCES files(file_id)
+);
+
+CREATE TABLE przepis_forms (
+    form_id              VARCHAR(255) NOT NULL PRIMARY KEY,
+    name            VARCHAR(255) NOT NULL,
+    surname         VARCHAR(255) NOT NULL,
+    album_number    VARCHAR(255) NOT NULL,
+    email           VARCHAR(255) NOT NULL,
+    field_of_study  VARCHAR(255) NOT NULL,
+    dean            VARCHAR(255) NOT NULL,
+    level           VARCHAR(255) NOT NULL,
+    year            VARCHAR(255) NOT NULL,
+    term_type       VARCHAR(255) NOT NULL,
+    file_id         VARCHAR(255) NOT NULL,
+    CONSTRAINT fk_file_wypis FOREIGN KEY (file_id) REFERENCES files(file_id)
+);
+
+CREATE TABLE przepis_subjects (
+    subject_id                  VARCHAR(255) NOT NULL PRIMARY KEY,
+    name                VARCHAR(255) NOT NULL,
+    type                VARCHAR(255) NOT NULL,
+    grade               NUMERIC  NOT NULL,
+    date_of_completion  VARCHAR(255) NOT NULL,
+    form_id             VARCHAR(255) NOT NULL,
+    CONSTRAINT fk_przepis_subject FOREIGN KEY (form_id) REFERENCES przepis_forms(form_id)
 );

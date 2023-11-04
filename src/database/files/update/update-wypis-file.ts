@@ -9,7 +9,7 @@ const updateWypisFile = async (fileId: string, file: File) => {
 
   try {
     await PostgresClient.query(
-      `UPDATE files SET title='${title}', type='${type}', date_of_creation=${dateOfCreation}, date_of_update=${dateOfUpdate} WHERE id='${fileId}'`
+      `UPDATE files SET title='${title}', type='${type}', date_of_creation=${dateOfCreation}, date_of_update=${dateOfUpdate} WHERE file_id='${fileId}'`
     );
 
     await PostgresClient.query(

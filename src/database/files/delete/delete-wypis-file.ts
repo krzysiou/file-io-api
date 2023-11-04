@@ -6,7 +6,7 @@ const deleteWypisFile = async (fileId: string) => {
       `DELETE FROM wypis_forms WHERE file_id='${fileId}'`
     );
 
-    await PostgresClient.query(`DELETE FROM files WHERE id='${fileId}'`);
+    await PostgresClient.query(`DELETE FROM files WHERE file_id='${fileId}'`);
   } catch (error) {
     console.log(error);
   }

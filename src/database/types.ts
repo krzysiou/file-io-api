@@ -1,11 +1,15 @@
+// USER
+
 interface DBUser {
   id: string;
   username: string;
   password: string;
 }
 
+// FILE
+
 interface DBFile {
-  id: string;
+  file_id: string;
   title: string;
   type: string;
   date_of_creation: number;
@@ -13,7 +17,10 @@ interface DBFile {
   user_id: string;
 }
 
+// WYPIS
+
 interface DBWypisForm {
+  form_id: string;
   name: string;
   surname: string;
   album_number: string;
@@ -26,4 +33,31 @@ interface DBWypisForm {
 
 type DBWypisFile = DBFile & DBWypisForm;
 
-export type { DBUser, DBWypisFile };
+// PRZEPIS
+
+interface DBPrzepisForm {
+  form_id: string;
+  name: string;
+  surname: string;
+  album_number: string;
+  field_of_study: string;
+  email: string;
+  dean: string;
+  level: string;
+  year: string;
+  term_type: string;
+  file_id: string;
+}
+
+interface DBSubject {
+  subject_id: string;
+  name: string;
+  type: string;
+  grade: number;
+  date_of_completion: string;
+  form_id: string;
+}
+
+type DBPrzepisFile = DBFile & DBPrzepisForm;
+
+export type { DBUser, DBWypisFile, DBPrzepisFile, DBSubject, DBPrzepisForm };

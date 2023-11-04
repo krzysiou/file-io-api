@@ -5,11 +5,11 @@ import { PostgresClient } from '../postgress-client';
 
 const getWypisFiles = async (userId: string) => {
   const wypisInfo = await PostgresClient.query<DBWypisFile>(
-    `SELECT f.*, wf.* FROM files f JOIN wypis_forms wf ON wf.file_id=f.id WHERE f.user_id='${userId}'`
+    `SELECT f.*, wf.* FROM files f JOIN wypis_forms wf ON wf.file_id=f.file_id WHERE f.user_id='${userId}'`
   );
 
   const wypisFiles: File[] = wypisInfo.rows.map((row) => ({
-    id: row.id,
+    id: row.file_id,
     title: row.title,
     type: row.type as FileType,
     dateOfCreation: row.date_of_creation,
