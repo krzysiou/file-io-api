@@ -6,6 +6,7 @@
   "scripts": {
     "build": "npx tsc",
     "dev": "nodemon ./src/index.ts",
+    "start": "nodemon ./build/index.js",
     "prod": "npx tsc && nodemon ./build/index.js",
     "lint": "eslint . --ext .ts,.tsx",
     "lint:fix": "npm run lint -- --fix"
