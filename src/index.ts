@@ -20,3 +20,5 @@ if (origin) {
 
 initDBConnection();
 initRouter(app, port, bindings);
+
+export default app;
