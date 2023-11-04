@@ -1,6 +1,5 @@
 import bodyParser from 'body-parser';
 
-import type { Request, Response } from 'express';
 import type { Binding } from './types';
 
 import { verifyJsonWebToken } from './utils/jwt-actions';
@@ -14,19 +13,7 @@ import { deleteFile } from './core/file-actions/delete-file';
 
 const jsonParser = bodyParser.json();
 
-const check = async (req: Request, res: Response) => {
-  console.log(1);
-
-  return res.status(200).send({ message: 'hello' });
-};
-
 const bindings: Binding[] = [
-  {
-    method: 'GET',
-    path: '/',
-    callback: check,
-    middleware: jsonParser,
-  },
   {
     method: 'POST',
     path: '/admin/login',
