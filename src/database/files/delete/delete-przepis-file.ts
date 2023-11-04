@@ -13,8 +13,6 @@ const deletePrzepisFile = async (fileId: string) => {
     );
 
     await PostgresClient.query(`DELETE FROM files WHERE file_id='${fileId}'`);
-
-    return;
   } catch (error) {
     console.log(error);
   }

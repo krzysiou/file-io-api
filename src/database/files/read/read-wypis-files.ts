@@ -1,9 +1,9 @@
-import type { DBWypisFile } from '../types';
-import type { File, FileType } from '../../types';
+import type { DBWypisFile } from '../../types';
+import type { File, FileType } from '../../../types';
 
-import { PostgresClient } from '../postgress-client';
+import { PostgresClient } from '../../postgress-client';
 
-const getWypisFiles = async (userId: string) => {
+const readWypisFiles = async (userId: string) => {
   const wypisInfo = await PostgresClient.query<DBWypisFile>(
     `SELECT f.*, wf.* FROM files f JOIN wypis_forms wf ON wf.file_id=f.file_id WHERE f.user_id='${userId}'`
   );
@@ -28,4 +28,4 @@ const getWypisFiles = async (userId: string) => {
   return wypisFiles;
 };
 
-export { getWypisFiles };
+export { readWypisFiles };

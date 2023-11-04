@@ -2,7 +2,7 @@ import type { Request, Response } from 'express';
 import type { File, User } from '../../types';
 
 import { checkValidation } from '../../utils/validation';
-import { getFiles } from '../../database/user/get-files';
+import { getUserFiles } from '../../database/user/get-user-files';
 import { updateWypisFile } from '../../database/files/update/update-wypis-file';
 import { updateSpzFile } from '../../database/files/update/update-spz-file';
 import { updatePrzepisFile } from '../../database/files/update/update-przepis-file';
@@ -22,7 +22,7 @@ const updateFile = async (req: Request, res: Response) => {
     return res.status(400).send({ message: 'You need to provide file title' });
   }
 
-  const files = await getFiles(requestingUser.id);
+  const files = await getUserFiles(requestingUser.id);
   if (!files) {
     return res.status(404).send('Could not find files for user');
   }
@@ -34,15 +34,15 @@ const updateFile = async (req: Request, res: Response) => {
 
   switch (file.type) {
     case 'spz': {
-      updateSpzFile(requestingFile.id, requestingFile);
+      await updateSpzFile(requestingFile.id, requestingFile);
       break;
     }
     case 'wypis': {
-      updateWypisFile(requestingFile.id, requestingFile);
+      await updateWypisFile(requestingFile.id, requestingFile);
       break;
     }
     case 'przepis': {
-      updatePrzepisFile(requestingFile.id, requestingFile);
+      await updatePrzepisFile(requestingFile.id, requestingFile);
       break;
     }
     default: {

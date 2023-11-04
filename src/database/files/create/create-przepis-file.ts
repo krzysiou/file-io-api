@@ -20,6 +20,7 @@ const createPrzepisFile = async (userId: string, file: File) => {
   } = form as PrzepisForm;
 
   const formId = uuid();
+
   try {
     await PostgresClient.query(
       `INSERT INTO files VALUES('${id}', '${title}', '${type}', ${dateOfCreation}, ${dateOfUpdate}, '${userId}')`

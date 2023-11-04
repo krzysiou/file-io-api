@@ -1,9 +1,9 @@
-import type { File, FileType, Subject } from '../../types';
-import type { DBPrzepisFile, DBSubject } from '../types';
+import type { File, FileType, Subject } from '../../../types';
+import type { DBPrzepisFile, DBSubject } from '../../types';
 
-import { PostgresClient } from '../postgress-client';
+import { PostgresClient } from '../../postgress-client';
 
-const getPrzepisFiles = async (userId: string) => {
+const readPrzepisFiles = async (userId: string) => {
   const przepisInfo = await PostgresClient.query<DBPrzepisFile>(
     `SELECT f.*, pf.* FROM files f JOIN przepis_forms pf ON pf.file_id=f.file_id WHERE f.user_id='${userId}'`
   );
@@ -46,4 +46,4 @@ const getPrzepisFiles = async (userId: string) => {
   return wypisFiles;
 };
 
-export { getPrzepisFiles };
+export { readPrzepisFiles };

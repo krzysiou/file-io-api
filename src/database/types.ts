@@ -60,4 +60,49 @@ interface DBSubject {
 
 type DBPrzepisFile = DBFile & DBPrzepisForm;
 
-export type { DBUser, DBWypisFile, DBPrzepisFile, DBSubject, DBPrzepisForm };
+// SPZ
+
+interface DBSpzForm {
+  form_id: string;
+  name: string;
+  surname: string;
+  album_number: string;
+  field_of_study: string;
+  email: string;
+  level: string;
+  term: string;
+  year: string;
+  dean: string;
+  file_id: string;
+}
+
+interface DBMainSubject {
+  subject_id: string;
+  name: string;
+  wclps: string;
+  ects: string;
+  form_id: string;
+}
+
+interface DBSideSubject {
+  subject_id: string;
+  name: string;
+  wclps: string;
+  ects: string;
+  faculty: string;
+  form_id: string;
+}
+
+type DBSPZFile = DBFile & DBSpzForm;
+
+export type {
+  DBUser,
+  DBWypisFile,
+  DBPrzepisFile,
+  DBSubject,
+  DBPrzepisForm,
+  DBSPZFile,
+  DBMainSubject,
+  DBSideSubject,
+  DBSpzForm,
+};

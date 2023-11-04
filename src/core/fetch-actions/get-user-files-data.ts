@@ -1,12 +1,12 @@
 import type { Request, Response } from 'express';
 import type { User } from '../../types';
 
-import { getFiles } from '../../database/user/get-files';
+import { getUserFiles } from '../../database/user/get-user-files';
 
 const getUserFilesData = async (req: Request, res: Response) => {
   const { id }: User = req.body.user;
 
-  const files = await getFiles(id);
+  const files = await getUserFiles(id);
   if (!files) {
     return res.status(404).send('Could not find files for user');
   }

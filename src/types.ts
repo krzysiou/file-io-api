@@ -45,6 +45,7 @@ type SideSubject = {
   ects: string;
   faculty: string;
 };
+
 interface SpzForm {
   info: SpzInfo;
   mainSubjects: MainSubject[];
@@ -94,7 +95,6 @@ interface User {
   id: string;
   username: string;
   password: string;
-  // remove question mark after db ready
   files?: File[];
 }
 
@@ -111,4 +111,6 @@ export type {
   WypisForm,
   PrzepisForm,
   Subject,
+  MainSubject,
+  SideSubject,
 };

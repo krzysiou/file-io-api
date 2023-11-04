@@ -32,15 +32,15 @@ const createFile = async (req: Request, res: Response) => {
 
   switch (file.type) {
     case 'spz': {
-      createSpzFile(requestingUser.id, file);
+      await createSpzFile(requestingUser.id, file);
       break;
     }
     case 'wypis': {
-      createWypisFile(requestingUser.id, file);
+      await createWypisFile(requestingUser.id, file);
       break;
     }
     case 'przepis': {
-      createPrzepisFile(requestingUser.id, file);
+      await createPrzepisFile(requestingUser.id, file);
       break;
     }
     default: {
