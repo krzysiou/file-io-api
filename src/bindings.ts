@@ -22,7 +22,7 @@ export { userLogin };
 const bindings: Binding[] = [
   {
     method: 'GET',
-    path: '/check',
+    path: '/',
     callback: check,
     middleware: jsonParser,
   },
