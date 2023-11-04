@@ -15,6 +15,8 @@ import { deleteFile } from './core/file-actions/delete-file';
 const jsonParser = bodyParser.json();
 
 const check = async (req: Request, res: Response) => {
+  console.log(1);
+
   return res.status(200).send({ message: 'hello' });
 };
 
