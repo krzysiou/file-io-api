@@ -12,8 +12,9 @@ dotenv.config();
 
 const app: Express = express();
 const port = process.env.PORT || '3100';
+const origin = process.env.ORIGIN || 'http://localhost:3000';
 
-app.use(cors({ origin: 'http://localhost:3000', methods: ['GET', 'POST'] }));
+app.use(cors({ origin, methods: ['GET', 'POST'] }));
 
 initDBConnection();
 initRouter(app, port, bindings);
