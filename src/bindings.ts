@@ -18,7 +18,6 @@ const check = async (req: Request, res: Response) => {
   return res.status(200).send({ message: 'hello' });
 };
 
-export { userLogin };
 const bindings: Binding[] = [
   {
     method: 'GET',
