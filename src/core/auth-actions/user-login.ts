@@ -15,7 +15,6 @@ const validatePassword = async (
 };
 
 const userLogin = async (req: Request, res: Response) => {
-  console.log('request sent');
   const { username, password } = req.body;
 
   if (!username) {
@@ -45,7 +44,6 @@ const userLogin = async (req: Request, res: Response) => {
   const accessToken = generateJsonWebToken(user);
   const expire = getExpireDate();
   const id = user.id;
-  console.log('response sent');
 
   return res.status(200).send({ id, accessToken, expire });
 };
